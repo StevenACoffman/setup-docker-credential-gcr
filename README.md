@@ -41,6 +41,8 @@ jobs:
 
 _That's it!_ This workflow will install docker-credential-gcr so you can use ko or docker (or whatever).
 
+You probably want to [set up Workload Identity](https://github.com/google-github-actions/auth#usage) between your GitHub Actions workflow and your GCP project.
+
 ### Select `docker-credential-gcr` version to install
 
 By default, `setup-docker-credential-gcr` installs the [latest released version of `ko`](https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases).
@@ -53,20 +55,7 @@ You can select a version with the `version` parameter:
     version: v0.14.1
 ```
 
-To build and install `ko` from source using `go install`, specify `version: tip`.
-
-### Pushing to other registries
-
-By default, `GoogleCloudPlatform/docker-credential-gcr` configures `ko` to push images to [GitHub Container Registry](https://ghcr.io), but you can configure it to push to other registries as well.
-
-If `KO_DOCKER_REPO` is already set when `setup-ko` runs, it will skip logging in to ghcr.io and will propagate `KO_DOCKER_REPO` for subsequent steps.
-
-To do this, you should provide credentials to authorize the push.
-You can use [encrypted secrets](https://docs.github.com/en/actions/reference/encrypted-secrets) to store the authorization token, and pass it to `ko login` before pushing:
-
-You probably want to [set up Workload Identity](https://github.com/google-github-actions/auth#usage) between your GitHub Actions workflow and your GCP project.
-
-
+To build and install `docker-credential-gcr` from source using `go install`, specify `version: tip`.
 
 ```yaml
 steps:
