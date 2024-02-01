@@ -1,0 +1,48 @@
+name: Use Action
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  use-action:
+    name: Use Action
+
+    strategy:
+      matrix:
+        platform:
+          - ubuntu-latest
+          - macos-latest
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - uses: actions/setup-go@fac708d6674e30b6ba41289acaab6d4b75aa0753 # v4.0.1
+        with:
+          go-version: '1.20'
+          check-latest: 'true'
+
+      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+
+      - uses: StevenACoffman/setup-docker-credential-gcr@main
+      - run: docker-credential-gcr version
+
+      - name: Install old release
+        uses: StevenACoffman/setup-docker-credential-gcr@main
+        with:
+          version: v0.0.0
+
+      - run: docker-credential-gcr version
+      - name: Check installed version
+        run: docker-credential-gcr version | grep 0.8.0
+
+      - name: Install from tip
+        uses: StevenACoffman/setup-docker-credential-gcr@main
+        with:
+          version: tip
+
+      - name: Check installed version (tip)
+        run: |
+          sudo rm /usr/local/bin/docker-credential-gcr # Uninstall previous versions.
+          docker-credential-gcr version

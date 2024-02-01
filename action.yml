@@ -1,0 +1,42 @@
+name: 'Setup docker-credential-gcr'
+description: 'Install and authorize docker-credential-gcr'
+branding:
+  icon: box
+  color: green
+inputs:
+  version:
+    description: 'Version of docker-credential-gcr to install (tip, latest-release, v0.1, etc.)'
+    required: true
+    default: 'latest-release'
+runs:
+  using: "composite"
+  steps:
+  - shell: bash
+    run: |
+      set -ex
+
+      # Install docker-credential-gcr:
+      # - if version is "tip", install from tip of main.
+      # - if version is "latest-release", look up latest release.
+      # - otherwise, install the specified version.
+      case ${{ inputs.version }} in
+      tip)
+        echo "Installing docker-credential-gcr using go install"
+        go install github.com/GoogleCloudPlatform/docker-credential-gcr@main
+        ;;
+      latest-release)
+        tag=$(curl -L -s -u "username:${{ github.token }}" https://api.github.com/repos/GoogleCloudPlatform/docker-credential-gcr/releases/latest | jq -r '.tag_name')
+        ;;
+      *)
+        tag="${{ inputs.version }}"
+      esac
+
+      os=${{ runner.os }}
+      if [[ $os == "macOS" ]]; then
+        os="Darwin"
+      fi
+
+      if [[ ! -z ${tag} ]]; then
+        echo "Installing docker-credential-gcr @ ${tag} for ${os}"
+        curl -fsL https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/${tag}/setup-docker-credential-gcr_${tag:1}_${os}_x86_64.tar.gz | sudo tar xzf - -C /usr/local/bin docker-credential-gcr
+      fi
