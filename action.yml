@@ -33,10 +33,24 @@ runs:
 
       os=${{ runner.os }}
       if [[ $os == "macOS" ]]; then
-        os="Darwin"
+        os="darwin"
       fi
+
+      case ${{ runner.os }} in
+      Linux)
+        os="linux"
+        ;;
+      Windows)
+        os="windows"
+        ;;
+      Darwin)
+        os="darwin"
+        ;;
+      *)
+        echo "Not Lowercasing OS Type ${os}"
+      esac
 
       if [[ ! -z ${tag} ]]; then
         echo "Installing docker-credential-gcr @ ${tag} for ${os}"
-        curl -fsL https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/${tag}/docker-credential-gcr_${tag:1}_${os}_x86_64.tar.gz | sudo tar xzf - -C /usr/local/bin docker-credential-gcr
+        curl -fsL https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/${tag}/docker-credential-gcr_${os}_amd64-${tag:1}.tar.gz | sudo tar xzf - -C /usr/local/bin docker-credential-gcr
       fi
