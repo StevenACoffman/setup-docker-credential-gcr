@@ -68,7 +68,7 @@ steps:
 
 ### Why?
 
-`gcloud` is great.
+The `gcloud` CLI is great.
 It's like a Swiss army knife for the cloud, if a knife could do anything to a cloud.
 
 It does so much.
