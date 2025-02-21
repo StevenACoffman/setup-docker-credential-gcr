@@ -31,7 +31,7 @@ jobs:
       - name: Install old release
         uses: StevenACoffman/setup-docker-credential-gcr@main
         with:
-          version: v0.0.0
+          version: v0.0.2
 
       - run: docker-credential-gcr version
       - name: Check installed version
