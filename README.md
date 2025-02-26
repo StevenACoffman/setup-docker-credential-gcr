@@ -33,7 +33,7 @@ jobs:
         with:
           go-version: '1.20.x'
       - uses: actions/checkout@v3
-      - uses: GoogleCloudPlatform/docker-credential-gcr@v0.6
+      - uses: StevenACoffman/setup-docker-credential-gcr@v0.0.3
       - name: 'Configure GCP Artifact Registry'
         run: docker-credential-gcr configure-docker --registries="us-central1-docker.pkg.dev"
 
@@ -50,7 +50,7 @@ By default, `setup-docker-credential-gcr` installs the [latest released version 
 You can select a version with the `version` parameter:
 
 ```yaml
-- uses: GoogleCloudPlatform/docker-credential-gcr@v0.6
+- uses: StevenACoffman/setup-docker-credential-gcr@v0.0.3
   with:
     version: v0.14.1
 ```
@@ -60,7 +60,7 @@ To build and install `docker-credential-gcr` from source using `go install`, spe
 ```yaml
 steps:
 ...
-- uses: StevenACoffman/setup-docker-credential-gcr@v0.6
+- uses: StevenACoffman/setup-docker-credential-gcr@v0.0.3
 - name: 'Configure Docker Credentials for Artifact Registry'
   run: |
     docker-credential-gcr configure-docker --registries="us-central1-docker.pkg.dev"
