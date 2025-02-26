@@ -1,4 +1,4 @@
-# GitHub Action to install and setup [`ko`](https://github.com/GoogleCloudPlatform/docker-credential-gcr)
+# GitHub Action to install and setup [docker-credential-gcr](https://github.com/GoogleCloudPlatform/docker-credential-gcr)
 
 [![Build](https://github.com/StevenACoffman/setup-docker-credential-gcr/actions/workflows/use-action.yaml/badge.svg)](https://github.com/StevenACoffman/setup-docker-credential-gcr/actions/workflows/use-action.yaml)
 <a href="https://gcr.io"><img src="https://avatars2.githubusercontent.com/u/21046548?s=400&v=4" height="120"/></a>
